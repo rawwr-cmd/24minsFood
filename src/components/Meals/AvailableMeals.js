@@ -11,19 +11,19 @@ const DUMMY_MEALS = [
   },
   {
     id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
+    name: "Samosas",
+    description: "A Indian specialty!",
     price: 16.5,
   },
   {
     id: "m3",
-    name: "Barbecue Burger",
+    name: "Burger",
     description: "American, raw, meaty",
     price: 12.99,
   },
   {
     id: "m4",
-    name: "Green Bowl",
+    name: "Salads",
     description: "Healthy...and green...",
     price: 18.99,
   },
