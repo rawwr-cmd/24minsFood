@@ -4,6 +4,7 @@ import classes from "./MealItem.module.css";
 import CartContext from "../../../store/cartContext";
 
 const MealItem = (props) => {
+  // console.log(props);
   const cartCtx = useContext(CartContext);
   //to render two decimal places an a dollar sign in a dynamic price
   const price = `$${props.price.toFixed(2)}`;
