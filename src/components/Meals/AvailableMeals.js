@@ -1,35 +1,55 @@
 import Card from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
 import classes from "./AvailableMeals.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const AvailableMeats = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
 
-  const fetchMealsHandler = async () => {
-    const response = await fetch(
-      "https://minsfood-116fe-default-rtdb.firebaseio.com/meals.json"
-    );
-    const responseData = await response.json();
-    const loadedMeals = [];
-    for (const key in responseData) {
-      // console.log(key);
-      loadedMeals.push({
-        // name: responseData[key].name,
-        // description: responseData[key].description,
-        // price: responseData[key].price,
-        ...responseData[key],
-        id: key,
-      });
+  const fetchMealsHandler = useCallback(async () => {
+    setIsLoading(true);
+    setHttpError(null);
+    try {
+      const response = await fetch(
+        "https://minsfood-116fe-default-rtdb.firebaseio.com/meals.json"
+      );
+
+      if (!response.ok) {
+        throw new Error("Lmao, we have messed up our backend (Comeback later)");
+      }
+
+      const responseData = await response.json();
+      const loadedMeals = [];
+      for (const key in responseData) {
+        // console.log(key);
+        loadedMeals.push({
+          // name: responseData[key].name,
+          // description: responseData[key].description,
+          // price: responseData[key].price,
+          ...responseData[key],
+          id: key,
+        });
+      }
+      setMeals(loadedMeals);
+    } catch (error) {
+      setHttpError(error.message);
     }
-    setMeals(loadedMeals);
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     fetchMealsHandler();
-  }, []);
+  }, [fetchMealsHandler]);
+
+  if (httpError) {
+    return (
+      <section className={classes.MealsError}>
+        <Card>{httpError}</Card>
+      </section>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -51,9 +71,7 @@ const AvailableMeats = () => {
 
   return (
     <section className={classes.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
+      <Card>{mealsList}</Card>
     </section>
   );
 };
