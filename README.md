@@ -1,4 +1,4 @@
-# DEPLOYED HERE [24minfoods](https://24mins.vercel.app)
+# DEPLOYED HERE [24minfoods](https://24mins-zarroh.vercel.app)
 
 # Getting Started with Create React App
 
