@@ -48,7 +48,13 @@ const Checkout = (props) => {
       return;
     }
 
-    console.log(nameInputRef.current.value);
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      postalCode: enteredPostalCode,
+    });
+    // console.log(enteredName);
   };
 
   const controlClasses = (formInputField) => {
